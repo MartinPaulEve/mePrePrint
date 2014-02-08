@@ -38,6 +38,7 @@ class MePrePrint (Debuggable):
         # get arguments
         self.doc_type = self.args['--type']
         self.title = self.args['--article_title']
+        self.name = self.args['--author_name']
 
     @staticmethod
     def copy(src, dst):
@@ -64,6 +65,7 @@ class MePrePrint (Debuggable):
             contents = doc_file.read()
 
             contents = self.do_replace(contents, '{ARTICLE_TITLE}', self.title)
+            contents = self.do_replace(contents, '{AUTHOR_NAME}', self.name)
 
 
         # remove the temporary file
