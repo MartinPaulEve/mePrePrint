@@ -22,6 +22,7 @@ import os
 import shutil, errno
 from debug import Debug
 import zipfile
+import subprocess
 
 __author__ = "Martin Paul Eve"
 __email__ = "martin@martineve.com"
@@ -63,16 +64,16 @@ class MePrePrint (Debuggable):
 
     @staticmethod
     def zip_dir(path, zip_file, final):
-        relroot = os.path.join(os.path.abspath(os.path.join(path, os.pardir)), final)
+        relative = os.path.join(os.path.abspath(os.path.join(path, os.pardir)), final)
         for root, dirs, files in os.walk(path):
             for file_name in files:
                 zip_file.write(os.path.join(root, file_name), os.path.relpath(os.path.join(root, file_name),
-                                                                              os.path.join(path, relroot)))
+                                                                              os.path.join(path, relative)))
 
     def create_coversheet(self, destination):
         # copy the coversheet to a temporary directory
         src = self.args['<input_cover>']
-        self.debug.print_debug(self, u'Copying coversheet to {0}'.format(destination))
+        self.debug.print_debug(self, u'Copying coversheet')
         os.mkdir(os.path.join(destination, u'coversheet'))
 
         with zipfile.ZipFile(src, "r") as z:
@@ -95,11 +96,29 @@ class MePrePrint (Debuggable):
             doc_file.write(contents)
             doc_file.truncate()
 
+        self.debug.print_debug(self, u'Replacing cover sheet hyperlinks')
+        with open (u'{0}'.format(os.path.join(destination, u'coversheet/word/_rels/document.xml.rels')),
+                   'r+') as doc_file:
+
+            contents = doc_file.read()
+
+            contents = self.do_replace(contents, '{URL}', self.url)
+
+            doc_file.seek(0)
+            doc_file.write(contents)
+            doc_file.truncate()
+
         # re-package the file into a docx
         with zipfile.ZipFile(os.path.join(destination, u'final_cover.docx'), "w") as z:
             self.zip_dir(os.path.join(destination, u'coversheet'), z, 'coversheet')
 
-        pdf = ''
+        pdf = os.path.join(destination, u'final_cover.pdf')
+
+        command = 'unoconv -f pdf {0}'.format(os.path.join(destination, u'final_cover.docx'))
+
+        self.debug.print_debug(self, 'Running: {0}'.format(command))
+
+        subprocess.call(command.split(' '))
 
         # remove the temporary file
         return pdf
@@ -107,9 +126,11 @@ class MePrePrint (Debuggable):
     def run(self):
         # create temporary directory
         temp_dir = tempfile.mkdtemp()
+        self.debug.print_debug(self, u'Making temporary directory {0}'.format(temp_dir))
 
         # create the coversheet
-        pdf = self.create_coversheet()
+        pdf = self.create_coversheet(temp_dir)
+        shutil.copy(pdf, self.args['<output_file>'])
 
         # remove the temporary directory
         self.debug.print_debug(self, u'Removing temporary directory {0}'.format(temp_dir))
