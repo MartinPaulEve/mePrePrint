@@ -130,7 +130,19 @@ class MePrePrint (Debuggable):
 
         # create the coversheet
         pdf = self.create_coversheet(temp_dir)
-        shutil.copy(pdf, self.args['<output_file>'])
+
+        # convert the user's document into a PDF
+        user_file = os.path.join(temp_dir, u'user.docx')
+        user_pdf = os.path.join(temp_dir, u'user.pdf')
+        shutil.copy(self.args['<input_article>'],user_file)
+        command = 'unoconv -f pdf {0}'.format(user_file)
+        self.debug.print_debug(self, 'Running: {0}'.format(command))
+        subprocess.call(command.split(' '))
+
+        # join the PDFs
+        command = 'pdfunite {0} {1} {2}'.format(pdf, user_pdf, self.args['<output_file>'])
+        self.debug.print_debug(self, 'Running: {0}'.format(command))
+        subprocess.call(command.split(' '))
 
         # remove the temporary directory
         self.debug.print_debug(self, u'Removing temporary directory {0}'.format(temp_dir))
