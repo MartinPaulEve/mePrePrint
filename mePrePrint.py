@@ -85,11 +85,11 @@ class MePrePrint (Debuggable):
 
             contents = self.do_replace(contents, '{ARTICLE_TITLE}', self.title)
             contents = self.do_replace(contents, '{AUTHOR_NAME}', self.name)
-            contents = self.do_replace(contents, '{version}', self.version)
-            contents = self.do_replace(contents, '{journal citation}', self.version)
+            contents = self.do_replace(contents, '{VERSION}', self.version)
+            contents = self.do_replace(contents, '{JOURNAL_CITATION}', self.version)
             contents = self.do_replace(contents, '{URL}', self.url)
-            contents = self.do_replace(contents, '{copyright}', self.copyright)
-            contents = self.do_replace(contents, '{copyright_year}', self.copyright_year)
+            contents = self.do_replace(contents, '{COPYRIGHT}', self.copyright)
+            contents = self.do_replace(contents, '{COPYRIGHT_YEAR}', self.copyright_year)
 
             doc_file.seek(0)
             doc_file.write(contents)
