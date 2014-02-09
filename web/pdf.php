@@ -2,7 +2,7 @@
 
  // do all this moving to ensure there is no way that user filename can be passed to the command line
  $info = pathinfo($_FILES['filename']['name']);
-print $info
+print $info;
  $ext = $info['extension']; // get the extension of the file
  $newname = generateRandomString().$ext;
  $output = "./" . generateRandomString().$pdf; 
