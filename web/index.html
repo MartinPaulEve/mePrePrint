@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+    	<title>Open Library of Humanities: Green Generator</title>
+	<link rel="stylesheet" href="css/shared.css" type="text/css" media="screen" />
+	<!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="screen" href="css/ie6.css" /><![endif]-->
+	<!--[if gte IE 7]><link rel="stylesheet" type="text/css" media="screen" href="css/ie7.css" /><![endif]-->
+    </head>
+    <body>
+        <div class="header">
+		<h1>Open Library of Humanities: Green Generator</h1>
+        </div>
+    
+	<div class="main">
+
+
+	<form action="pdf.php" method="post" class="smart-green">
+	    <h1>Article Information
+		<span>Please complete the following information about your article:</span>
+	    </h1>
+	    <label>
+		<span>The author name(s) as you would like it/them to appear:</span>
+		<input id="name" type="text" name="name" placeholder="Dr. X Y" />
+	    </label>
+
+	    <label>
+		<span>The article title:</span>
+		<input id="title" type="text" name="title" placeholder="'My Article'" />
+	    </label>
+	   
+	    <label>
+		<span>The article copyright holder:</span>
+		<input id="copyright" type="text" name="copyright" placeholder="X Y" />
+	    </label>
+
+	    <label>
+		<span>The article copyright year:</span>
+		<input id="year" type="text" name="year" placeholder="2014" />
+	    </label>
+	   
+	    <label>
+		<span>The article citation:</span>
+		<input id="citation" type="text" name="citation" placeholder="'My Article', Textual Practice, 25, 4 (2013)" />
+	    </label>
+
+	    <label>
+		<span>The article URL:</span>
+		<input id="URL" type="text" name="URL" placeholder="https://www.openlibhums.org" />
+	    </label>
+
+	    <label>
+		<span>The article (.doc, .docx, .odt): </span>
+		<input id="file" type="file" name="file"/>
+	    </label>
+
+	    <label>
+		<span>Document type:</span>
+		<select>
+			<option value="preprint">Pre-print (not peer reviewed)</option>
+			<option value="postprint">Post-print (peer reviewed)</option>
+			<option value="final">Publisher's Version</option>
+		</select>
+	    </label>
+
+	     <label>
+		<span>&nbsp;</span>
+		<input type="button" class="button" value="Create PDF" />
+	    </label>    
+	</form>
+
+	</div>
+        
+    </body>
+</html>
