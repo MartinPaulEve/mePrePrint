@@ -1,7 +1,8 @@
 <?php
 
  // do all this moving to ensure there is no way that user filename can be passed to the command line
- $info = pathinfo($_FILES['file']['name']);
+ $info = pathinfo($_FILES['filename']['name']);
+print $info
  $ext = $info['extension']; // get the extension of the file
  $newname = generateRandomString().$ext;
  $output = "./" . generateRandomString().$pdf; 
@@ -15,7 +16,6 @@ var_dump($ret);
 var_dump($out);
 var_dump($err);
 
-print $ret;
 
 function generateRandomString($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -43,7 +43,7 @@ function generateRandomString($length = 10) {
         </div>
     
 	<div class="main">
-		<p>Many thanks for using the generator. Your <a href="<?php $output ?>">PDF is now ready</a>.</p>
+		<p>Many thanks for using the generator. Your <a href="<?php echo $output ?>">PDF is now ready</a>.</p>
 
 	</div>
         
