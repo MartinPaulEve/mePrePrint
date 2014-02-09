@@ -62,10 +62,12 @@ class MePrePrint (Debuggable):
         return in_string.replace(replace_text, substitute)
 
     @staticmethod
-    def zip_dir(path, zip_file):
+    def zip_dir(path, zip_file, final):
+        relroot = os.path.join(os.path.abspath(os.path.join(path, os.pardir)), final)
         for root, dirs, files in os.walk(path):
             for file_name in files:
-                zip_file.write(os.path.join(root, file_name))
+                zip_file.write(os.path.join(root, file_name), os.path.relpath(os.path.join(root, file_name),
+                                                                              os.path.join(path, relroot)))
 
     def create_coversheet(self):
         # copy the coversheet to a temporary directory
@@ -90,12 +92,12 @@ class MePrePrint (Debuggable):
 
         # re-package the file into a docx
         with zipfile.ZipFile(os.path.join(destination, u'final_cover.docx'), "w") as z:
-            self.zip_dir(os.path.join(destination, u'coversheet'), z)
+            self.zip_dir(os.path.join(destination, u'coversheet'), z, 'coversheet')
 
 
         # remove the temporary file
         self.debug.print_debug(self, u'Removing temporary directory {0}'.format(destination))
-        shutil.rmtree(destination)
+        #shutil.rmtree(destination)
         print destination
 
     def run(self):
