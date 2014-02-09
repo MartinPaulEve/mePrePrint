@@ -47,7 +47,12 @@ class MePrePrint (Debuggable):
         self.citation = self.args['--citation']
         self.url = self.args['--url']
 
-        self.version = 'VERSION'
+        if self.doc_type == 'preprint':
+            self.version = 'pre-print (not peer reviewed)'
+        elif self.doc_type == 'postprint':
+            self.version = 'post-print (peer reviewed)'
+        elif self.doc_type == 'final':
+            self.version = 'final publisher'
 
     @staticmethod
     def copy(src, dst):
@@ -87,7 +92,7 @@ class MePrePrint (Debuggable):
             contents = self.do_replace(contents, '{ARTICLE_TITLE}', self.title)
             contents = self.do_replace(contents, '{AUTHOR_NAME}', self.name)
             contents = self.do_replace(contents, '{VERSION}', self.version)
-            contents = self.do_replace(contents, '{JOURNAL_CITATION}', self.version)
+            contents = self.do_replace(contents, '{JOURNAL_CITATION}', self.citation)
             contents = self.do_replace(contents, '{URL}', self.url)
             contents = self.do_replace(contents, '{COPYRIGHT}', self.copyright)
             contents = self.do_replace(contents, '{COPYRIGHT_YEAR}', self.copyright_year)
