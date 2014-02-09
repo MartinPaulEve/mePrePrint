@@ -15,6 +15,8 @@ var_dump($ret);
 var_dump($out);
 var_dump($err);
 
+print $ret
+
 function generateRandomString($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $randomString = '';
