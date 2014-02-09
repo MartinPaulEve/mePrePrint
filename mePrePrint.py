@@ -72,9 +72,12 @@ class MePrePrint (Debuggable):
     def create_coversheet(self):
         # copy the coversheet to a temporary directory
         destination = tempfile.mkdtemp()
+        src = self.args['<input_cover>']
         self.debug.print_debug(self, u'Copying coversheet to {0}'.format(destination))
-        my_dir = os.path.dirname(os.path.realpath(__file__))
-        self.copy(os.path.join(my_dir, u'resources/extracted'), os.path.join(destination, u'coversheet'))
+        os.mkdir(os.path.join(destination, u'coversheet'))
+
+        with zipfile.ZipFile(src, "r") as z:
+            z.extractall(os.path.join(destination, u'coversheet'))
 
         # open the document XML
         with open (u'{0}'.format(os.path.join(destination, u'coversheet/word/document.xml')), 'r+') as doc_file:
@@ -99,7 +102,7 @@ class MePrePrint (Debuggable):
 
         # remove the temporary file
         self.debug.print_debug(self, u'Removing temporary directory {0}'.format(destination))
-        #shutil.rmtree(destination)
+        shutil.rmtree(destination)
         print destination
 
     def run(self):
