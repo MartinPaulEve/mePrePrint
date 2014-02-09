@@ -84,11 +84,13 @@ class MePrePrint (Debuggable):
             contents = self.do_replace(contents, '{AUTHOR_NAME}', self.name)
             contents = self.do_replace(contents, '{version}', self.version)
             contents = self.do_replace(contents, '{journal citation}', self.version)
-            contents = self.do_replace(contents, '{url}', self.url)
+            contents = self.do_replace(contents, '{URL}', self.url)
             contents = self.do_replace(contents, '{copyright}', self.copyright)
             contents = self.do_replace(contents, '{copyright_year}', self.copyright_year)
 
+            doc_file.seek(0)
             doc_file.write(contents)
+            doc_file.truncate()
 
         # re-package the file into a docx
         with zipfile.ZipFile(os.path.join(destination, u'final_cover.docx'), "w") as z:
