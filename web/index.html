@@ -15,7 +15,7 @@
 	<div class="main">
 
 
-	<form action="pdf.php" method="post" class="smart-green">
+	<form action="pdf.php" enctype="multipart/form-data" method="post" class="smart-green">
 	    <h1>Article Information
 		<span>Please complete the following information about your article:</span>
 	    </h1>
@@ -56,7 +56,7 @@
 
 	    <label>
 		<span>Document type:</span>
-		<select>
+		<select id="type" name="type">
 			<option value="preprint">Pre-print (not peer reviewed)</option>
 			<option value="postprint">Post-print (peer reviewed)</option>
 			<option value="final">Publisher's Version</option>
