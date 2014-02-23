@@ -4,7 +4,7 @@
  $info = pathinfo($_FILES['filename']['name']);
 print $info;
  $ext = $info['extension']; // get the extension of the file
- $newname = generateRandomString() . "." . .$ext;
+ $newname = generateRandomString() . "." . $ext;
  $output = "./" . generateRandomString() . ".pdf";
 
  $target = "../".$newname;
