@@ -5,7 +5,7 @@
 print $info;
  $ext = $info['extension']; // get the extension of the file
  $newname = generateRandomString().$ext;
- $output = "./" . generateRandomString().$pdf; 
+ $output = "./" . generateRandomString() . ".pdf";
 
  $target = "../".$newname;
  move_uploaded_file( $_FILES['file']['tmp_name'], $target);
