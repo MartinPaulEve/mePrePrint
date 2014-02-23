@@ -8,7 +8,7 @@ print $info;
  $output = "./" . generateRandomString() . ".pdf";
 
  $target = "../".$newname;
- move_uploaded_file( $_FILES['file']['tmp_name'], $target);
+ move_uploaded_file( $_FILES['filename']['tmp_name'], $target);
 
 $ret = exec("python ../mePrePrint.py generate ../resources/coversheet.docx ". $newname . " " . $output . " -t '" . escapeshellcmd($_POST['type']) . "' -a '" . escapeshellcmd($_POST['name']) . "' -c '" . escapeshellcmd($_POST['citation']) . "' -r '" . escapeshellcmd($_POST['title']) . "' -o '" . escapeshellcmd($_POST['copyright']) . "' -y '" . escapeshellcmd($_POST['year']) . "' -u '" . escapeshellcmd($_POST['URL']) . "'", $out, $err);
 
