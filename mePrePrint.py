@@ -81,8 +81,9 @@ class MePrePrint (Debuggable):
         self.debug.print_debug(self, u'Copying coversheet')
         os.mkdir(os.path.join(destination, u'coversheet'))
 
-        with zipfile.ZipFile(src, "r") as z:
-            z.extractall(os.path.join(destination, u'coversheet'))
+        z = zipfile.ZipFile(src, "r")
+
+        z.extractall(os.path.join(destination, u'coversheet'))
 
         # open the document XML
         self.debug.print_debug(self, u'Replacing cover sheet variables')
@@ -114,8 +115,9 @@ class MePrePrint (Debuggable):
             doc_file.truncate()
 
         # re-package the file into a docx
-        with zipfile.ZipFile(os.path.join(destination, u'final_cover.docx'), "w") as z:
-            self.zip_dir(os.path.join(destination, u'coversheet'), z, 'coversheet')
+        z = zipfile.ZipFile(os.path.join(destination, u'final_cover.docx'), "w")
+
+        self.zip_dir(os.path.join(destination, u'coversheet'), z, 'coversheet')
 
         pdf = os.path.join(destination, u'final_cover.pdf')
 
